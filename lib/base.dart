@@ -13,6 +13,8 @@ class BaseScreen extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => WeatherProvider(),
       child: const MaterialApp(
+        title: 'Test Project',
+        debugShowCheckedModeBanner: false,
         home: MyHomePage(),
       ),
     );
@@ -23,6 +25,7 @@ class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _MyHomePageState createState() => _MyHomePageState();
 }
 

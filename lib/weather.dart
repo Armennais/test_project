@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:test_project/app_config.dart';
 import 'package:test_project/city_input.dart';
 import 'package:test_project/weatherProvider.dart';
 import 'package:test_project/weather_data.dart';
@@ -11,20 +12,17 @@ import 'package:http/http.dart' as http;
 class CurrentWeatherCard extends StatelessWidget {
   const CurrentWeatherCard({super.key});
   Future<void> fetchWeatherData(String city, WeatherProvider provider) async {
-    const apiKey = 'RNW295TS8C2ZX7T4ER94394LJ';
     final response = await http.get(
       Uri.parse(
-          'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/$city?unitGroup=metric&key=$apiKey&contentType=json'),
+          '${AppConfig.APP_WEATHER_URL}?key=${AppConfig.APP_API_KEY}&q=$city'),
     );
-
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       final weatherData = WeatherData(
-        city: data['address'],
-        description: data['description'],
-        temperature: data['days'][0]['temp'],
-      );
-
+          city: data['location']['name'],
+          icon: data['current']['condition']['icon'],
+          temperature: data['current']['temp_c'],
+          country: data['location']['country']);
       provider.setWeatherData(weatherData);
     } else {
       throw Exception('Failed to load weather data');

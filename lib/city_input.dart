@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:test_project/app_config.dart';
 import 'package:test_project/weatherProvider.dart';
 import 'dart:convert';
 import 'dart:async';
@@ -19,13 +20,11 @@ class _CityInputState extends State<CityInput> {
   @override
   void initState() {
     super.initState();
-    // Fetch initial weather data when the widget is first created.
     fetchWeatherData(_cityController.text);
-    // Set up a periodic timer to update weather data every 2-3 seconds.
-    Timer.periodic(Duration(seconds: 3), (timer) {
-      fetchWeatherData(
-          _cityController.text == "" ? "Saratov" : _cityController.text);
-    });
+    // Timer.periodic(Duration(seconds: 3), (timer) {
+    //   fetchWeatherData(
+    //       _cityController.text == "" ? "Saratov" : _cityController.text);
+    // });
   }
 
   @override
@@ -64,19 +63,18 @@ class _CityInputState extends State<CityInput> {
   }
 
   Future<WeatherData> fetchWeatherData(String city) async {
-    // Replace 'YOUR_API_KEY' with your actual OpenWeatherMap API key.
-    const apiKey = 'RNW295TS8C2ZX7T4ER94394LJ';
     final response = await http.get(
       Uri.parse(
-          'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/$city?unitGroup=metric&key=$apiKey&contentType=json'),
+          '${AppConfig.APP_WEATHER_URL}?key=${AppConfig.APP_API_KEY}&q=$city'),
     );
+    print(response.body);
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       return WeatherData(
-        city: data['address'],
-        description: data['description'],
-        temperature: data['days'][0]['temp'],
-      );
+          city: data['location']['name'],
+          icon: data['current']['condition']['icon'],
+          temperature: data['current']['temp_c'],
+          country: data['location']['country']);
     } else {
       throw Exception('Failed to load weather data');
     }

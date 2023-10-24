@@ -4,7 +4,7 @@ import 'package:test_project/weather_data.dart';
 class WeatherProvider extends ChangeNotifier {
   WeatherData _weatherData = WeatherData(
     city: '',
-    description: '',
+    icon: '',
     temperature: 0.0,
   );
 

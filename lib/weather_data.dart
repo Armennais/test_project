@@ -1,11 +1,11 @@
 class WeatherData {
   final String city;
-  final String description;
+  final String icon;
   final double temperature;
-
-  WeatherData({
-    required this.city,
-    required this.description,
-    required this.temperature,
-  });
+  final String? country;
+  WeatherData(
+      {required this.city,
+      required this.icon,
+      required this.temperature,
+      this.country});
 }

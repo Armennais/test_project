@@ -19,30 +19,30 @@ class _WeatherDisplayState extends State<WeatherDisplay> {
         const SizedBox(
           height: 40,
         ),
+        const SizedBox(
+          height: 40,
+        ),
         Text(
           weatherData.city,
           style: const TextStyle(
               fontSize: 50, fontWeight: FontWeight.w800, color: Colors.green),
         ),
-        RichText(
-          text: TextSpan(
-            style: const TextStyle(color: Colors.blueAccent, fontSize: 18),
-            children: [
-              const TextSpan(
-                text: 'Temperature:  ',
-              ),
-              TextSpan(
-                  text: '${weatherData.temperature.toStringAsFixed(2)}°C',
-                  style: const TextStyle(color: Colors.red, fontSize: 30)),
-            ],
-          ),
-        ),
         const SizedBox(
           height: 40,
         ),
-        Text(
-          weatherData.description,
-          style: const TextStyle(fontSize: 14),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            if (weatherData.country != null)
+              Text(
+                weatherData.country!,
+                style: const TextStyle(fontSize: 20, color: Colors.blueAccent),
+              ),
+            Text('${weatherData.temperature.toStringAsFixed(2)}°C',
+                style: const TextStyle(color: Colors.red, fontSize: 30)),
+            if (weatherData.icon != '')
+              Image.network('https:${weatherData.icon}')
+          ],
         ),
       ],
     );
