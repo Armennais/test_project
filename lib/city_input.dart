@@ -20,11 +20,10 @@ class _CityInputState extends State<CityInput> {
   @override
   void initState() {
     super.initState();
-    fetchWeatherData(_cityController.text);
-    // Timer.periodic(Duration(seconds: 3), (timer) {
-    //   fetchWeatherData(
-    //       _cityController.text == "" ? "Saratov" : _cityController.text);
-    // });
+    Timer.periodic(Duration(seconds: 3), (timer) {
+      fetchWeatherData(
+          _cityController.text == "" ? "Saratov" : _cityController.text);
+    });
   }
 
   @override

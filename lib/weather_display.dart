@@ -19,9 +19,6 @@ class _WeatherDisplayState extends State<WeatherDisplay> {
         const SizedBox(
           height: 40,
         ),
-        const SizedBox(
-          height: 40,
-        ),
         Text(
           weatherData.city,
           style: const TextStyle(
